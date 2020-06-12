@@ -3,7 +3,8 @@ name=FieldExplorer NL
 qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=This application is used to generate plot files for the application in the FieldExplorer.
-    Please note:
+about=Please note:
+
     - Use EPSG:4326 as coordinate system,
     - Ensure no plots are touching or overlapping.
     - Plots are required to be defined with 4 corners.
@@ -26,8 +27,6 @@ repository=https://github.com/rduivenvoorde/FieldExplorerNL
 category=vector
 
 experimental=False
-
-about==This application is used to generate plot files for the application in the FieldExplorer.
 
 ; change icon...
 icon=icons/phenokey.png

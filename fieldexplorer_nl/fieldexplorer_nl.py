@@ -116,8 +116,8 @@ For questions or comments to this plugin, please contact us via info@phenokey.co
         layer_extent = layer.extent()
         nl_extent = QgsRectangle(2, 50.0, 8.0, 55)
         if not nl_extent.contains(layer_extent):
-            self.show_message('The data/layer extent: "{}" is not within The Netherlands.\nPlease provide data within {}.'
-                              .format(layer_extent, nl_extent))
+            self.show_message('The data/layer extent:\n{}\nis not within The Netherlands.\nPlease provide data within\n{}.'
+                              .format(layer_extent.toString(), nl_extent.toString()))
             return
 
         features = layer.getFeatures()
@@ -131,9 +131,7 @@ For questions or comments to this plugin, please contact us via info@phenokey.co
         for feature in features:
             others = layer.getFeatures()
             for other in others:
-                self.log('Testing: \n{} with {}'.format(feature.attributes(), other.attributes()))
-                #print('Testing: \n{} with {}'.format(feature.attributes(), other.attributes()))
-                #print('Testing: \n{} with {}'.format(feature, other))
+                # self.log('Testing: \n{} with {}'.format(feature.attributes(), other.attributes()))
                 if feature['Plot-ID'] == other['Plot-ID']:
                     # self.log('IDEM: \n{} {}'.format(feature.attributes(),other.attributes()))
                     pass
@@ -151,7 +149,7 @@ For questions or comments to this plugin, please contact us via info@phenokey.co
                 .format(layer.name(), file_name, directory))
             # QUOTE_NONNUMERIC, QUOTE_MINIMAL
             csv_writer = csv.writer(f, delimiter=',', quotechar='"',
-                                    quoting=csv.QUOTE_MINIMAL)
+                                    quoting=csv.QUOTE_MINIMAL) # NO quoting
             # header
             csv_writer.writerow(('Plot-ID', 'A(LAT)', 'A(LONG)', 'B(LAT)', 'B(LONG)',
                                  'C(LAT)', 'C(LONG)', 'D(LAT)', 'D(LONG)', 'Comments'))
