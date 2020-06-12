@@ -44,8 +44,18 @@ class FieldExplorerNl(object):
 
         # connect the action to the work/run method
         self.action.triggered.connect(self.run)
-        help_txt = """Info
-This plugin ....
+        help_txt = """FieldExplorer Information
+        
+This application is used to generate plot files for the application in the FieldExplorer.
+
+Please note: 
+- Use EPSG:4326 as coordinate system, 
+- Ensure no plots are touching or overlapping. 
+- Plots are required to be defined with 4 corners. 
+- Please ensure the attributes "Plot-ID" and "Comments" are used for identification of the plots.
+
+For questions or comments to this plugin, please contact us via info@phenokey.com
+
 """
         self.action_info.triggered.connect(lambda: self.show_message(help_txt))
 
@@ -87,11 +97,6 @@ This plugin ....
         layer_path = layer.dataProvider().dataSourceUri()
         (directory, file_name) = os.path.split(layer_path)
         file_name = file_name.split('|')[0]
-        self.log('Starting to write "{}" ({} in {}) to FieldExplorer NL CSV'
-                 .format(layer.name(), file_name, directory))
-
-        (directory, file_name) = os.path.split(layer_path)
-        file_name = file_name.split('|')[0]
         csv_name = os.path.splitext(file_name)[0] + '.csv'
         csv_file = os.path.join(directory, csv_name)
 
@@ -115,10 +120,6 @@ This plugin ....
                               .format(layer_extent, nl_extent))
             return
 
-        # check if polygons touch (should NOT)
-
-
-
         features = layer.getFeatures()
         attributes = layer.fields().names()
         if not ('Plot-ID' in attributes and 'Comments' in attributes):
@@ -126,7 +127,28 @@ This plugin ....
                               .format(attributes))
             return
 
+        # check for touches (could also be intersects)
+        for feature in features:
+            others = layer.getFeatures()
+            for other in others:
+                self.log('Testing: \n{} with {}'.format(feature.attributes(), other.attributes()))
+                #print('Testing: \n{} with {}'.format(feature.attributes(), other.attributes()))
+                #print('Testing: \n{} with {}'.format(feature, other))
+                if feature['Plot-ID'] == other['Plot-ID']:
+                    # self.log('IDEM: \n{} {}'.format(feature.attributes(),other.attributes()))
+                    pass
+                elif feature.geometry().intersects(other.geometry()):
+                    self.show_message(
+                        'These two features intersect each other: '
+                        '\n{}\n{}. They should not share vertices and segments should not touch.'
+                        .format(feature.attributes(), other.attributes()))
+                    return
+
+        features = layer.getFeatures()
         with open(csv_file, 'w', newline='') as f:
+            self.log(
+                'Starting to write "{}" ({} in {}) to FieldExplorer NL CSV'
+                .format(layer.name(), file_name, directory))
             # QUOTE_NONNUMERIC, QUOTE_MINIMAL
             csv_writer = csv.writer(f, delimiter=',', quotechar='"',
                                     quoting=csv.QUOTE_MINIMAL)
