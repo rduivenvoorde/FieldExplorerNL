@@ -1,0 +1,27 @@
+[general]
+name=FieldExplorer NL
+qgisMinimumVersion=3.10
+qgisMaximumVersion=3.99
+description=This is a QGIS plugin to write FieldExplorer csv files
+    from a vector file format like shapefiles or geopackage
+version=version 1.0
+author=Richard Duivenvoorde
+email=richard@zuidt.nl
+
+
+changelog=
+    1.0 First public release
+
+tracker=https://github.com/rduivenvoorde/FieldExplorerNL
+homepage=https://github.com/rduivenvoorde/FieldExplorerNL
+repository=https://github.com/rduivenvoorde/FieldExplorerNL
+
+category=vector
+
+experimental=False
+
+about==This is a QGIS plugin to write FieldExplorer csv files from a vector file format like shapefiles or geopackage
+
+
+; change icon...
+icon=icons/icon.png
