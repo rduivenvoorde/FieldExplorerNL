@@ -24,4 +24,4 @@ about==This is a QGIS plugin to write FieldExplorer csv files from a vector file
 
 
 ; change icon...
-icon=icons/icon.png
+icon=icons/phenokey.png

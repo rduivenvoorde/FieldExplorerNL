@@ -39,8 +39,8 @@ class FieldExplorerNl(object):
     def initGui(self):
         # Create action that will start plugin
         current_directory = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-        self.action = QAction(QIcon(os.path.join(current_directory, "icons", "icon.png")), "Create CSV", self.iface.mainWindow())
-        self.action_info = QAction(QIcon(os.path.join(current_directory, "icons", "icon.png")), "FieldExplorer Info", self.iface.mainWindow())
+        self.action = QAction(QIcon(os.path.join(current_directory, "icons", "phenokey.png")), "Create CSV", self.iface.mainWindow())
+        self.action_info = QAction(QIcon(os.path.join(current_directory, "icons", "phenokey.png")), "FieldExplorer Info", self.iface.mainWindow())
 
         # connect the action to the work/run method
         self.action.triggered.connect(self.run)
@@ -121,8 +121,8 @@ This plugin ....
 
         features = layer.getFeatures()
         attributes = layer.fields().names()
-        if not ('id' in attributes and ('opmerking' in attributes or 'Gewas' in attributes)):
-            self.show_message('The data should contain both an "id" and an "opmerking" attribute.\nAvailable attributes: {}'
+        if not ('Plot-ID' in attributes and 'Comments' in attributes):
+            self.show_message('The data should contain both an "Plot-ID" and a "Comments" attribute.\nAvailable attributes: {}'
                               .format(attributes))
             return
 
