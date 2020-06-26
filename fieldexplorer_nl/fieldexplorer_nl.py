@@ -171,9 +171,22 @@ For questions or comments to this plugin, please contact us via info@phenokey.co
                 # check if just 5
                 if len(coordinates) > 5:
                     self.show_message(
-                        'The feature {} contains too many vertices,\nthere should be just 4, but has: {}'
+                        'The feature {}\ncontains too many vertices,\nthere should be just 4, but has: {}'
                         .format(feature.attributes(), len(coordinates)-1))
                     return
+                if len(f'{feature["Plot-ID"]:}') > 50:
+                        self.show_message(
+                            'The feature {}\nhas a Plot-ID of length {}\nPlease change this Plot-ID to a shorter one:\n"{}"'
+                            .format(feature.attributes(), len(feature['Plot-ID']), feature['Plot-ID']))
+                        return
+                # check for '\ / : * ? " < > |'
+                forbidden_chars = ('\\', '/', ':', '*', '?', '"', '<', '>', '|')
+                for c in forbidden_chars:
+                    if c in f'{feature["Plot-ID"]:}':
+                        self.show_message(
+                            'The feature {}\ncontains the character "{}" which is forbidden in Plot-IDs\nPlease change this Plot-ID: "{}"'
+                            .format(feature.attributes(), c, feature['Plot-ID']))
+                        return
 
                 row = []
                 row.append(feature['Plot-ID'])

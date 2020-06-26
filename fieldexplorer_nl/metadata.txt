@@ -12,12 +12,13 @@ about=Please note:
 
     For questions or comments to this plugin, please contact us via info@phenokey.com
 
-version=version 1.0
+version=version 1.1
 author=Richard Duivenvoorde
 email=richard@zuidt.nl
 
 
 changelog=
+    1.1 Add tests for length and illegal chars in Plot-ID
     1.0 First public release
 
 tracker=https://github.com/rduivenvoorde/FieldExplorerNL
